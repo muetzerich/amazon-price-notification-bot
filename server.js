@@ -1,9 +1,16 @@
 require('dotenv').config();
 
-var app = require('express')();
+let app = require('express')();
+var exphbs  = require('express-handlebars');
+
+app.engine('handlebars', exphbs({defaultLayout: 'main'}));
+app.set('view engine', 'handlebars');
+
 var http = require('http').Server(app);
 
 require('./controllers/controllers').init(app)
+
+
 
 let bot = require('./libs/telegramm/setup').initTelegrammBot();
 require('./libs/telegramm/logic').run(bot)
